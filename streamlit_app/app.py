@@ -243,12 +243,13 @@ with middle:
         
         display_df = df_all[["combination","option_type","available_items","commodity_cost","transport_cost","total_cost"]].copy()
         display_df["Coverage"] = df_all.apply(lambda r: f"{r['available_items']}/{r['total_requested']}", axis=1)
+        # pandas 3.0 fix: applymap -> map
+        try:
+            styled = display_df.style.map(color_option, subset=["option_type"])
+        except AttributeError:
+            styled = display_df.style.applymap(color_option, subset=["option_type"])
         st.dataframe(
-            try:
-    styled = display_df.style.map(color_option, subset=["option_type"])
-except AttributeError:
-    styled = display_df.style.applymap(color_option, subset=["option_type"])
-st.dataframe(styled, use_container_width=True, height=350)
+            styled,
             use_container_width=True,
             height=350
         )
@@ -326,4 +327,3 @@ with right:
     st.info("You can still add these to the basket, but they will not appear in procurement options until mandi data is available.")
 
 st.caption("Transport estimated @ Rs 14/km one-way (Tata Ace 5yr, petrol Rs 114.54, 12 kmpl) + round trip. Prices are modal prices from data.gov.in last 7 days.")
-
