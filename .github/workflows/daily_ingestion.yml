@@ -1,1 +1,33 @@
+name: Daily Mandi Data Ingestion
 
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "30 22 * * *"
+      timezone: "Asia/Kolkata"
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests psycopg2-binary python-dotenv
+
+      - name: Run mandi data ingestion
+        env:
+          DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          python scripts/ingest.py
