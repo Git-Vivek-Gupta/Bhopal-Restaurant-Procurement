@@ -45,7 +45,7 @@ SQL Decision Engine (views - 7-day window, transport model, 3 options)
 Streamlit / Power BI Dashboard (DirectQuery)
 ```
 
-![Preview](Dashboard/Streamlit dashboard.png)
+![Preview](Dashboard/Streamlit_dashboard.png)
 
 ## Data Sources & Constants
 
