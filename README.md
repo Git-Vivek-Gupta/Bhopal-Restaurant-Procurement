@@ -143,16 +143,6 @@ README, architecture, Loom video, resume bullet.
 *   GitHub Actions (cron + secrets)
 *   Data.gov.in OGD API
 
-## How to Run Locally
-
-```bash
-git clone https://github.com/your/bhopal-restaurant-procurement
-cd bhopal-restaurant-procurement
-pip install -r requirements.txt
-# create .env with DATA_GOV_API_KEY and SUPABASE_DB_URL
-python scripts/ingest.py
-streamlit run streamlit_app/app.py
-```
 
 ## Deployment
 
@@ -174,18 +164,4 @@ This is not a mandi price dashboard. It is a **procurement decision engine** tha
 
 It uses official government data, handles real data-quality issues (grade, substring filter, timeouts, dedup), models transport realistically, and provides 3 actionable options ranked by total landed cost — exactly how a restaurant procurement manager thinks before 4 AM.
 
-## Resume Bullet
 
-> Built end-to-end restaurant procurement decision engine for Bhopal using live Govt. of India mandi API (3K+ mandis), Supabase, and GitHub Actions daily automation. Engineered SQL logic for 3 options — single partial, single full (1 stop), split full (2 mandis, 190 pairs brute-force) — calculating total landed cost = commodity cost (modal/100 * qty) + transport (Tata Ace 5yr, Rs 14/km one-way, petrol Rs 114.54, 12 kmpl, 250km radius). Streamlit dashboard shows cheapest full basket (e.g., Bhopal+Haatpipliya split saves 27% vs Ujjain single) with missing-item alerts and 7-day availability window.
-
-## Constants Reference (Do Not Change Daily)
-
-*   Petrol: 114.54 Rs/l
-*   Mileage: 12 kmpl (5yr old)
-*   Cost per km one-way: 14 Rs
-*   Round trip multiplier: 2
-*   Radius: 250 km
-*   Mandis: 20
-*   Time window: 7 days
-*   Vehicle: Tata Ace Gold Petrol 5yr
-*   Resource ID: 9ef84268-d588-465a-a308-a864a43d0070
