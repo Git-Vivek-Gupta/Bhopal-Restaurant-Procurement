@@ -244,7 +244,11 @@ with middle:
         display_df = df_all[["combination","option_type","available_items","commodity_cost","transport_cost","total_cost"]].copy()
         display_df["Coverage"] = df_all.apply(lambda r: f"{r['available_items']}/{r['total_requested']}", axis=1)
         st.dataframe(
-            display_df.style.applymap(color_option, subset=["option_type"]),
+            try:
+    styled = display_df.style.map(color_option, subset=["option_type"])
+except AttributeError:
+    styled = display_df.style.applymap(color_option, subset=["option_type"])
+st.dataframe(styled, use_container_width=True, height=350)
             use_container_width=True,
             height=350
         )
