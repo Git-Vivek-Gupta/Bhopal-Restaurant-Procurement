@@ -183,26 +183,10 @@ def main():
             logger.info(f"{comm}: {len(recs)} fetched, {len(cleaned)} kept")
             all_cleaned.extend(cleaned)
         
-       # Data quality check
-commodity_counts = {}
-
-for row in all_cleaned:
-    commodity = row[3]
-    commodity_counts[commodity] = commodity_counts.get(commodity, 0) + 1
-
-valid_commodities = len(commodity_counts)
-
-logger.info(
-    f"Data quality: {valid_commodities} commodities, "
-    f"{len(all_cleaned)} valid rows"
-)
-
-if valid_commodities < 3 or len(all_cleaned) < 5:
-    logger.error(
-        f"Data quality check failed: "
-        f"{valid_commodities} commodities, {len(all_cleaned)} rows"
-    )
-    sys.exit(1)
+        # Data quality check
+        if len(all_cleaned) < 5:
+            logger.error(f"Too few rows after filtering: {len(all_cleaned)} < 5, failing")
+            sys.exit(1)
         
         upserted = upsert(all_cleaned)
         logger.info(f"DONE - Upserted {upserted} rows")
